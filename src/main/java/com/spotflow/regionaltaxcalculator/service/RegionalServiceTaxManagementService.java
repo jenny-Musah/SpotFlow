@@ -4,9 +4,10 @@ import com.spotflow.regionaltaxcalculator.data.dto.request.CalculateTaxRequest;
 import com.spotflow.regionaltaxcalculator.data.dto.response.CalculateTaxResponse;
 
 
-public interface RegionalServicesManagementService {
+
+public interface RegionalServiceTaxManagementService {
 
 
 
-    CalculateTaxResponse calculateTax(CalculateTaxRequest calculateTaxRequest);
+    CalculateTaxResponse calculateTax(CalculateTaxRequest calculateTaxRequest, Long regionId);
 }

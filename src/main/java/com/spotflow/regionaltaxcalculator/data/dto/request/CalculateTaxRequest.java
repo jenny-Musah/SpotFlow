@@ -7,5 +7,4 @@ import lombok.Setter;
 @Getter
 public class CalculateTaxRequest {
     private long serviceCode;
-    private long regionId;
 }

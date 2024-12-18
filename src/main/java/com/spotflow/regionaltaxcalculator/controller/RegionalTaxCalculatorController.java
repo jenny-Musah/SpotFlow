@@ -3,22 +3,26 @@ package com.spotflow.regionaltaxcalculator.controller;
 import com.spotflow.regionaltaxcalculator.data.dto.request.CalculateTaxRequest;
 import com.spotflow.regionaltaxcalculator.data.dto.response.CalculateTaxResponse;
 import com.spotflow.regionaltaxcalculator.data.dto.response.ListOfServicesResponse;
+import com.spotflow.regionaltaxcalculator.service.RegionalServiceTaxManagementService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("regional-tax/")
+@RequestMapping("/api/regional-tax/")
 public class RegionalTaxCalculatorController {
 
 
+    @Autowired
+    RegionalServiceTaxManagementService regionalServiceTaxManagementService;
+
+
     @PostMapping("calculate-tax")
-    public ResponseEntity<CalculateTaxResponse> calculateTax(CalculateTaxRequest request) {
-        return null;
+    public ResponseEntity<CalculateTaxResponse> calculateTax(@RequestBody CalculateTaxRequest request, @RequestParam(value = "region-id") Long regionId) {
+        return ResponseEntity.ok(regionalServiceTaxManagementService.calculateTax(request, regionId));
     }
 
     @GetMapping("regional-services")
