@@ -1,4 +1,4 @@
-package com.spotflow.regionaltaxcalculator.util;
+package com.spotflow.regionaltaxcalculator.util.exceptions;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

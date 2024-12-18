@@ -1,4 +1,4 @@
-package com.spotflow.regionaltaxcalculator.util;
+package com.spotflow.regionaltaxcalculator.util.exceptions;
 
 public class RegionalTaxCalculatorException  extends RuntimeException{
 

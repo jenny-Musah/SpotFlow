@@ -26,9 +26,9 @@ public class RegionalTaxCalculatorController {
     }
 
     @GetMapping("regional-services")
-    public ResponseEntity<List<ListOfServicesResponse>> listOfRegionalServices(){
+    public ResponseEntity<List<ListOfServicesResponse>> listOfRegionalServices(@RequestParam(name = "region-id") Long regionId) {
 
-        return null;
+        return ResponseEntity.ok(regionalServiceTaxManagementService.getAllServicesInARegion(regionId));
     }
 
 

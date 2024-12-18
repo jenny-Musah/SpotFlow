@@ -5,7 +5,7 @@ import com.spotflow.regionaltaxcalculator.data.dto.response.CalculateTaxResponse
 import com.spotflow.regionaltaxcalculator.data.repository.RegionRepository;
 import com.spotflow.regionaltaxcalculator.data.repository.ServicesRepository;
 import com.spotflow.regionaltaxcalculator.service.RegionalServiceTaxManagementService;
-import com.spotflow.regionaltaxcalculator.util.RegionalTaxCalculatorException;
+import com.spotflow.regionaltaxcalculator.util.exceptions.RegionalTaxCalculatorException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -56,20 +56,30 @@ public class RegionalServicesTaxManagementServiceTest {
         String totalPriceTwo = regionalServiceTaxManagementService.calculateTax(calculateTaxRequest,3L).getTotalPrice();
         assertNotEquals(totalPriceOne,totalPriceTwo);
     }
- @Test
+    @Test
     public void testThatExceptionIsThrownWhenAnEmptyRequestIsGivenToCalculateTax() {
         calculateTaxRequest = null;
        assertThrows(RegionalTaxCalculatorException.class, () -> regionalServiceTaxManagementService.calculateTax(calculateTaxRequest,1L));
     }
-@Test
+    @Test
     public void testThatExceptionIsThrownWhenAnInvalidRegionIdIsGivenToCalculateTax() {
         calculateTaxRequest.setServiceCode(5888);
        assertThrows(RegionalTaxCalculatorException.class, () -> regionalServiceTaxManagementService.calculateTax(calculateTaxRequest,22L));
     }
-@Test
+    @Test
     public void testThatExceptionIsThrownWhenAnInvalidOrNonExistingServiceCodeIsGivenCalculateTax() {
         calculateTaxRequest.setServiceCode(588856788);
        assertThrows(RegionalTaxCalculatorException.class, () -> regionalServiceTaxManagementService.calculateTax(calculateTaxRequest,22L));
     }
+    @Test
+    public void testThatListOFServicesInaRegionCanBeGotten() {
+        assertFalse(servicesRepository.findAll().isEmpty());
+        assertEquals(2, regionalServiceTaxManagementService.getAllServicesInARegion(1L).size());
+    }
+    @Test
+    public void testThatExceptionIsThrownWhenInvalidRegionIdIsGivenToCalculateTax() {
+        assertThrows(RegionalTaxCalculatorException.class, () -> regionalServiceTaxManagementService.getAllServicesInARegion(22L));
+    }
+
 
 }

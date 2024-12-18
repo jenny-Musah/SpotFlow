@@ -3,13 +3,17 @@ package com.spotflow.regionaltaxcalculator.service;
 
 import com.spotflow.regionaltaxcalculator.data.dto.request.CalculateTaxRequest;
 import com.spotflow.regionaltaxcalculator.data.dto.response.CalculateTaxResponse;
+import com.spotflow.regionaltaxcalculator.data.dto.response.ListOfServicesResponse;
 import com.spotflow.regionaltaxcalculator.data.models.Region;
 import com.spotflow.regionaltaxcalculator.data.models.Services;
 import com.spotflow.regionaltaxcalculator.data.repository.RegionRepository;
 import com.spotflow.regionaltaxcalculator.data.repository.ServicesRepository;
-import com.spotflow.regionaltaxcalculator.util.RegionalTaxCalculatorException;
+import com.spotflow.regionaltaxcalculator.util.exceptions.RegionalTaxCalculatorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class RegionalServicesTaxManagementServiceImp implements RegionalServiceTaxManagementService {
@@ -32,6 +36,8 @@ public class RegionalServicesTaxManagementServiceImp implements RegionalServiceT
         }
         throw new RegionalTaxCalculatorException("Invalid Input");
     }
+
+
 
     private CalculateTaxResponse calculatedTaxResponse(double price, double governmentTax) {
         CalculateTaxResponse calculateTaxResponse = new CalculateTaxResponse();
@@ -65,5 +71,25 @@ public class RegionalServicesTaxManagementServiceImp implements RegionalServiceT
     }
 
 
+    @Override
+    public List<ListOfServicesResponse> getAllServicesInARegion(Long regionId) {
+        if(regionRepository.findById(regionId).isPresent()) {
+            return getListOfServices(regionId);
+        }
+        else  throw new RegionalTaxCalculatorException("Invalid input,Region not found");
+
+    }
+
+    private List<ListOfServicesResponse> getListOfServices(Long regionId) {
+        List<ListOfServicesResponse> listOfServicesResponses = new ArrayList<>();
+        for(Services services : servicesRepository.findServicesByRegion(findRegion(regionId))){
+            listOfServicesResponses.add(createListOfServicesResponse(services));
+        }
+        return listOfServicesResponses;
+    }
+
+    private ListOfServicesResponse createListOfServicesResponse(Services services){
+        return new ListOfServicesResponse(services.getServiceName(),services.getServiceCode(),"$"+(services.getServicePrice()),services.getRegion().getRegionId());
+    }
 
 }
