@@ -7,15 +7,15 @@ import com.spotflow.regionaltaxcalculator.data.repository.RegionRepository;
 import com.spotflow.regionaltaxcalculator.data.repository.ServicesRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+
+@Component
 public class DataGenerator {
-
-
 
     @Autowired
     private RegionRepository regionRepository;
+
     @Autowired
     private ServicesRepository servicesRepository;
 
