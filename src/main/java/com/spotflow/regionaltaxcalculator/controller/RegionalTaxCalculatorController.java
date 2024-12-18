@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/regional-tax/")
+@RequestMapping("/api/regional/")
 public class RegionalTaxCalculatorController {
 
 
@@ -25,7 +25,7 @@ public class RegionalTaxCalculatorController {
         return ResponseEntity.ok(regionalServiceTaxManagementService.calculateTax(request, regionId));
     }
 
-    @GetMapping("regional-services")
+    @GetMapping("services")
     public ResponseEntity<List<ListOfServicesResponse>> listOfRegionalServices(@RequestParam(name = "region-id") Long regionId) {
 
         return ResponseEntity.ok(regionalServiceTaxManagementService.getAllServicesInARegion(regionId));
