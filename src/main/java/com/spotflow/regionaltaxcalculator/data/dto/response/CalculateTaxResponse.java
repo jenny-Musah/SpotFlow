@@ -9,6 +9,6 @@ import lombok.Setter;
 public class CalculateTaxResponse {
     private String servicePrice;
     private String governmentTax;
-final private String importDuty = "$0.5";
+    private final String importDuty = "$0.5";
     private String totalPrice;
 }
