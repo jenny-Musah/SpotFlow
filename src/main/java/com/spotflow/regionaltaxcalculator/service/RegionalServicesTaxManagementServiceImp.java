@@ -28,7 +28,7 @@ public class RegionalServicesTaxManagementServiceImp implements RegionalServiceT
 
 
     @Override
-    public CalculateTaxResponse calculateTax(CalculateTaxRequest calculateTaxRequest, Long regionId) throws RegionalTaxCalculatorException {
+    public CalculateTaxResponse calculateTax(CalculateTaxRequest calculateTaxRequest, Long regionId){
         if(isCalculateTaxRequestValid(calculateTaxRequest, regionId)) {
             Services services = findService(calculateTaxRequest.getServiceCode(),regionId);
             double price = services.getServicePrice();
